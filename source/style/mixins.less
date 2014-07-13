@@ -6,6 +6,10 @@
 	.row;
 
 	padding: @nice-spacing;
+
+	&.animate-showing {
+		.animate(slide-up);
+	}
 }
 
 .grabbable-left-panel(@background: @settings-panel-background-color) {
@@ -30,3 +34,15 @@
 		width: @grabber-width;
 	}
 }
+
+/* Chrome, Safari, Opera */
+	@-webkit-keyframes myfirst {
+		from {background: red;}
+		to {background: yellow;}
+	}
+
+/* Standard syntax */
+@keyframes myfirst {
+    from {background: red;}
+    to {background: yellow;}
+ }

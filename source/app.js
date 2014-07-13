@@ -12,19 +12,25 @@ enyo.kind({
 		{kind: "Router", useHistory: true, triggerOnStart: true, routes:[
 			{path: "dashboard", handler: "showDashboard", context: "owner"},
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
-			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"}
+			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
+			{path: "manage-cars", handler: "showManageCars", context: "owner"},
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }}
 	],
 
-	start: function() {
-		console.log("Start");
-		this.inherited(arguments);
+	observers: {
+		saveActiveCar: ['car']
 	},
 
-	create: function() {
+	saveActiveCar: function(was, car, property) {
+		if(car)
+			localStorage.setItem("active-car", car.get('carId'));
+	},
+
+	start: function() {
 		this.inherited(arguments);
+
 		var carCollection = new enyo.Collection({
-			model: "mileage.Car",
+			model: "mileage.Car"
 		});
 
 		this.set('cars', carCollection);
@@ -35,11 +41,21 @@ enyo.kind({
 
 		carCollection.add(car);
 
-		this.set('car', this.createComponent({kind: "mileage.CarController", model: car}));
+		this.set('car', car);
 
 		carCollection.add(new mileage.Car({
 			name: "BMW 325i"
 		}));
+	},
+
+	setActiveCar: function(car) {
+		this.set('car', car);
+	},
+
+	removeCar: function(car) {
+		this.cars.remove(car);
+		if(this.get('car') == car)
+			this.set('car', this.cars.at(0));
 	},
 
 	setView: function(ctor) {
@@ -48,16 +64,20 @@ enyo.kind({
 	},
 
 	showDashboard: function() {
-		this.setView(this.createComponent({kind:"mileage.Dashboard"}));
+		this.setView(this.createComponent({kind: "mileage.Dashboard"}));
 	},
 
 	showAddFillUp: function() {
-		this.setView(this.createComponent({kind:"mileage.AddFillUp"}));
+		this.setView(this.createComponent({kind: "mileage.AddFillUp"}));
 	},
 
 	showAddMaintenance: function() {
-		this.setView(this.createComponent({kind:"mileage.AddMaintenance"}));
-	}
+		this.setView(this.createComponent({kind: "mileage.AddMaintenance"}));
+	},
+
+	showManageCars: function() {
+		this.setView(this.createComponent({kind: "mileage.ManageCars"}));	
+	},
 });
 
 enyo.ready(function () {

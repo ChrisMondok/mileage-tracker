@@ -1,5 +1,6 @@
 enyo.kind({
 	name: "mileage.AddFillUp",
+	classes: "add-fill-up",
 
 	bindings:[
 		{kind: "mileage.DateToDateStringBinding", from: ".fillUp.date", to: ".$.dateInput.value", oneWay: false},
@@ -15,8 +16,8 @@ enyo.kind({
 		{kind: "nomad.Toolbar", components:[
 			{content: "Add Fill-Up"}
 		]},
-		{kind: "nomad.Form", onSubmit:"submitForm", components:[
-			{kind: "enyo.Scroller", fit: true, components:[
+		{kind: "enyo.Scroller", classes: "scroller", components:[
+			{kind: "nomad.Form", onSubmit:"submitForm", components:[
 				{tag:"label", classes:"input-decorator flex-columns", components:[
 					{name: "odometerInput", kind: "nomad.Input", placeholder: "Odometer reading", type: "number", required: true, min: 0, step: "any"},
 					{content: "miles"}
@@ -28,9 +29,9 @@ enyo.kind({
 				{tag: "label", classes:"input-decorator flex-columns", components: [
 					{name: "dateInput", kind: "nomad.Input", type: "date", required: true},
 					{content:"date"}
-				]}
-			]},
-			{name: "submitButton", content: "Add", kind: "nomad.SubmitButton"}
+				]},
+				{name: "submitButton", content: "Add", kind: "nomad.SubmitButton"}
+			]}
 		]}
 	],
 

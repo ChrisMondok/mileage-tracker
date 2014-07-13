@@ -12,6 +12,7 @@ enyo.depends(
 	"Dashboard.js",
 	"AddFillUp.js",
 	"AddMaintenance.js",
+	"ManageCars.js",
 
 	"app.js"
 );

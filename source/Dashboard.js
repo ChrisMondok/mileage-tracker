@@ -14,7 +14,7 @@ enyo.kind({
 		]},
 		{classes:"fill", components:[
 			{kind: "enyo.Scroller", classes:"main-scroller enyo-fit", components:[
-				{name: "mpgSummary", kind: "mileage.MPGSummary"},
+				{name: "mpgSummary", tag: "section", kind: "mileage.MPGSummary"},
 				{kind: "mileage.MaintenanceSummary"},
 				{content: "Add Fill-Up", kind: "enyo.Button", ontap:"addFillUp"},
 				{content: "Perform Maintenance", kind: "enyo.Button"}
@@ -23,17 +23,16 @@ enyo.kind({
 				{kind: "enyo.Scroller", classes: "scroller settings-panel", components:[
 					{tag:"section", components:[
 						{name: "carRepeater", kind: "nomad.DataSelect", components:[
-							{components:[
-								{name: "carName"}
-							], bindings: [
-								{from: ".model.name", to: ".$.carName.content"}
+							{bindings: [
+								{from: ".model.name", to: ".content"},
+								{from: ".model.carId", to: ".value"}
 							]}
 						]}
 					]},
 					{tag: "section", components:[
 						{tag: "header", content:"Settings"},
 						{content: "Maintenance Schedule", kind: "enyo.Button"},
-						{content: "Manage Cars", kind: "enyo.Button"}
+						{content: "Manage Cars", kind: "enyo.Button", ontap: "manageCars"}
 					]}
 				]}
 			]}
@@ -50,12 +49,15 @@ enyo.kind({
 			this.$.settingsSlider.animateToMin();
 		else
 			this.$.settingsSlider.animateToMax();
+	},
+
+	manageCars: function() {
+		window.location.hash = "manage-cars";
 	}
 });
 
 enyo.kind({
 	name: "mileage.MPGSummary",
-	tag: "section",
 	classes: "mpg-summary",
 	content:"MPG Summary",
 

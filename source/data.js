@@ -2,9 +2,19 @@ enyo.kind({
 	name: "mileage.Car",
 	kind: "enyo.Model",
 
+	addFillUp: function(f) {
+		if(!(f instanceof mileage.FillUp))
+			throw new TypeError("addFillUp requires a mileage.FillUp, but got a "+typeof(f));
+		this.get("fillUps").add(f);
+	},
+
 	defaults: {
 		initialMileage: 0
 	},
+
+	mixins: [
+		enyo.ComputedSupport
+	],
 
 	computeAverageMPG: function() {
 		var averageMPG = undefined;
@@ -13,7 +23,6 @@ enyo.kind({
 		if(raw.length) {
 			var miles = Math.max.apply(Math, raw.map("odometer")) - this.get("initialMileage");
 			var gallons = Number(raw.sum("gallons"));
-			console.log(miles, gallons);
 			averageMPG = miles / gallons;
 		}
 
@@ -21,7 +30,16 @@ enyo.kind({
 	},
 
 	observers: {
-		setUpListeners: ["fillUps"]
+		setUpListeners: ["fillUps"],
+		computeAverageMPG: ["initialMileage"]
+	},
+
+	computed: {
+		carId:[]
+	},
+
+	carId: function() {
+		return this.euid;
 	},
 
 	setUpListeners: function(old, fillUps, path, options) {
@@ -44,7 +62,6 @@ enyo.kind({
 			this.set("fillUps", new enyo.Collection({store: this.store, model: "mileage.FillUp"}));
 		}
 	}
-
 });
 
 enyo.kind({
@@ -58,13 +75,8 @@ enyo.kind({
 	}
 });
 
+//TODO: what does this buy us?
 enyo.kind({
 	name: "mileage.CarController",
-	kind: "enyo.ModelController",
-
-	addFillUp: function(f) {
-		if(!(f instanceof mileage.FillUp))
-			throw new TypeError("addFillUp requires a mileage.FillUp, but got a "+typeof(f));
-		this.get("fillUps").add(f);
-	}
+	kind: "enyo.ModelController"
 });
