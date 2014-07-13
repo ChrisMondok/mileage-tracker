@@ -1,0 +1,31 @@
+@app-background-color: #EEE;
+@card-background-color: #FAFAFA;
+@settings-panel-background-color: white;
+
+@accent-color: #42F799;
+
+.compute-lighting(@background-color) {
+	@shadow-color: darken(@background-color, 25%);
+	@highlight-color: lighten(@background-color, 25%);
+}
+
+.row(@background-color: @card-background-color) {
+	.compute-lighting(@background-color);
+
+	border-top: 1px solid @highlight-color;
+	border-bottom: 1px solid @shadow-color;
+
+	.top { border-top: 0; }
+	.bottom { border-bottom: 0; }
+
+}
+
+.column(@background-color: @card-background-color) {
+	.compute-lighting(@background-color);
+
+	border-left: 1px solid @highlight-color;
+	border-right: 1px solid @shadow-color;
+
+	.left { border-left-width: 0; }
+	.right { border-right-width: 0; }
+}

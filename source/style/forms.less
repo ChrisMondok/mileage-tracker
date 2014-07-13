@@ -1,0 +1,88 @@
+button {
+}
+
+input, .input-decorator {
+	.input(lighten(@app-background-color, 15%));
+}
+
+input {
+	font-family: "lato regular", sans;
+}
+
+.input-decorator {
+	color: mix(@app-background-color, contrast(@app-background-color));
+
+	input {
+		box-shadow: none;
+		background: transparent;
+		margin:0;
+		padding-top:0;
+		padding-bottom:0;
+		flex-grow: 1;
+	}
+}
+
+form {
+	padding: @nice-spacing;
+}
+
+label {
+	display: block;
+	margin-top: @nice-spacing;
+	margin-bottom: @nice-spacing;
+
+	font-family: "lato italic", sans;
+	font-style: italic;
+}
+
+.input(@background-color: @app-background-color) {
+	background-color: @background-color;
+
+
+	box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.4),
+		0px 1px 0px lighten(@background-color, 50%);
+	border: none;
+	border-radius: 4px;
+
+	padding: 4px;
+
+	&:focus {
+		outline: none;
+	}
+
+}
+
+.button(@background-color: @app-background-color) {
+	background-color: @background-color;
+	background: linear-gradient(to bottom, lighten(@background-color, 10%), darken(@background-color, 10%));
+
+	padding: 0.25em;
+
+	border: none;
+	border-radius: 4px;
+
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25), inset 0px -2px 2px -2px darken(@background-color, 25%);
+
+	color: mix(contrast(@background-color), @background-color, 50%);
+
+	/* this looks weird on mobile.
+	&:focus {
+		background-color: lighten(@background-color, 10%);
+		background: linear-gradient(to bottom, lighten(@background-color, 25%), @background-color);
+		outline: none;
+	}
+	*/
+
+	&:focus {
+		outline: none;
+	}
+
+	&:active {
+		background: linear-gradient(to bottom, darken(@background-color, 10%), lighten(@background-color, 10%));
+		box-shadow: inset 0px 2px 8px -2px rgba(0, 0, 0, 0.35);
+	}
+
+	&:disabled {
+		color: mix(contrast(@background-color), @background-color, 50%);
+	}
+}

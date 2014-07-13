@@ -1,0 +1,48 @@
+.dashboard {
+	.main-scroller {
+		padding: 0 @nice-spacing;
+
+		button {
+			.full-width;
+			.button(@app-background-color);
+		}
+
+		section {
+			.card();
+		}
+	}
+
+	.settings-slider {
+		.grabbable-left-panel();
+	}
+}
+
+.mpg-summary {
+	.flex-container(row);
+
+	min-height: 2em;
+
+	.overview {
+		.column(@card-background-color);
+		.left;
+		text-align: center;
+		padding-right: @nice-spacing;
+
+		.number {
+			font-size: 2em;
+			font-family: "lato hairline", sans;
+
+			.whole {
+				font-family: "lato light", sans;
+			}
+		}
+	}
+
+	.graph {
+		flex: 1 1;
+		.column(@card-background-color);
+		.right;
+
+		padding-left: @nice-spacing;
+	}
+}

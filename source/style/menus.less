@@ -1,0 +1,52 @@
+.settings-panel {
+	font-size: 1em;
+
+	button, select {
+		font-family: "lato light", sans;
+		padding: @nice-spacing/2;
+		display: block;
+		width: 100%;
+		font-size: 1em;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	select {
+		display: block;
+		background: transparent;
+		border: none;
+		.row(@settings-panel-background-color;);
+	}
+
+	section {
+		header {
+			font-size: 0.8em;
+			font-variant: small-caps;
+		}
+		&:not(:last-child) {
+			margin-bottom:@nice-spacing;
+		}
+	}
+
+	button {
+		border: none;
+		background: transparent;
+
+		margin: 0;
+		text-align: left;
+
+		.row;
+		&:first-of-type {
+			.top;
+		}
+		&:last-of-type {
+			.bottom;
+		}
+
+		&:active {
+			background-color: darken(@settings-panel-background-color, 15%);
+		}
+	}
+}
