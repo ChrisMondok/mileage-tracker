@@ -14,8 +14,13 @@ enyo.kind({
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
 			{path: "manage-cars", handler: "showManageCars", context: "owner"}
-		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }}
+		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }},
+		{kind: "enyo.Signals", onCarValuesChanged: "saveEventually"}
 	],
+
+	saveEventually: function() {
+		this.startJob("saveCarsEventually", "saveCars", 1000);
+	},
 
 	observers: {
 		saveActiveCar: ['car']
@@ -39,7 +44,7 @@ enyo.kind({
 	},
 
 	createCar: function() {
-		var newCar = this.get('cars').createRecord();
+		var newCar = this.get('cars').createRecord({a:3});
 		if(!this.get('car'))
 			this.set('car', newCar);
 		return newCar;

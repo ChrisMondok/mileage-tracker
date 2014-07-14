@@ -31,6 +31,10 @@ enyo.kind({
 	],
 
 	computeAverageMPG: function() {
+	},
+
+	averageMPG: function() {
+		console.log("Computing Average MPG");
 		var averageMPG = undefined;
 
 		var raw = this.get("fillUps").raw();
@@ -40,15 +44,21 @@ enyo.kind({
 			averageMPG = miles / gallons;
 		}
 
-		this.set("averageMPG", averageMPG);
+		return averageMPG;
+	},
+
+	valuesChanged: function() {
+		this.set("fillUpsModifiedAt", new Date().getTime());
+		enyo.Signals.send("onCarValuesChanged");
 	},
 
 	observers: {
-		computeAverageMPG: ["initialMileage"]
+		valuesChanged: ["initialMileage"]
 	},
 
 	computed: {
-		carId:[]
+		carId:[],
+		averageMPG:["fillUpsModifiedAt", "initialMileage", {cached: true}]
 	},
 
 	carId: function() {
@@ -62,32 +72,32 @@ enyo.kind({
 
 		if(fillUps) {
 			this.subscribeToCollection(fillUps);
-			this.computeAverageMPG();
 		}
 	},
 
 	subscribeToCollection: function(collection) {
 		for(var i = 0; i < collectionEventsToTriggerMPGCalculation.length; i++)
-			collection.addListener(collectionEventsToTriggerMPGCalculation[i], this.computeAverageMPG, this);
+			collection.addListener(collectionEventsToTriggerMPGCalculation[i], this.valuesChanged, this);
 	},
 
 	unsubscribeToCollection: function(collection) {
 		for(var i = 0; i < collectionEventsToTriggerMPGCalculation.length; i++)
-			collection.removeListener(collectionEventsToTriggerMPGCalculation[i], this.computeAverageMPG, this);
+			collection.removeListener(collectionEventsToTriggerMPGCalculation[i], this.valuesChanged, this);
 	},
 
 	constructor: function() {
+
+		//ALWAYS run through parse.
+		if(!arguments[0])
+			arguments[0] = {};
+
 		this.inherited(arguments);
-		if(!("fillUps" in this.attributes))
-			this.set("fillUps", new enyo.Collection({store: this.store, model: "mileage.data.FillUp"}));
-		else {
-			this.subscribeToCollection(this.get('fillUps'));
-			this.computeAverageMPG();
-		}
+		this.subscribeToCollection(this.get('fillUps'));
 	},
 
 	parse: function(data) {
 		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps);
+		data.fillUpsModifiedAt = new Date().getTime();
 		return data;
 	}
 });
