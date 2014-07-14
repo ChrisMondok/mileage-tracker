@@ -4,6 +4,8 @@ enyo.kind({
 
 	bindings:[
 		{from: "^app.car", to: ".$.mpgSummary.car"},
+		{from: "^app.car", to: ".$.hasACar.showing", kind: "enyo.BooleanBinding"},
+		{from: "^app.car", to: ".$.doesNotHaveACar.showing", kind: "enyo.InvertBooleanBinding"},
 		{from: "^app.cars", to: ".$.carRepeater.collection"}
 	],
 
@@ -14,14 +16,21 @@ enyo.kind({
 		]},
 		{classes:"fill", components:[
 			{kind: "enyo.Scroller", classes:"main-scroller enyo-fit", components:[
-				{name: "mpgSummary", tag: "section", kind: "mileage.MPGSummary"},
-				{kind: "mileage.MaintenanceSummary"},
-				{content: "Add Fill-Up", kind: "enyo.Button", ontap:"addFillUp"},
-				{content: "Perform Maintenance", kind: "enyo.Button"}
+				{name: "hasACar", components:[
+					{name: "mpgSummary", tag: "section", kind: "mileage.MPGSummary"},
+					{kind: "mileage.MaintenanceSummary"},
+					{name: "addFillUpButton", content: "Add Fill-Up", kind: "enyo.Button", ontap:"addFillUp"},
+					{name: "addMaintenanceButton", content: "Perform Maintenance", kind: "enyo.Button"}
+				]},
+				{name: "doesNotHaveACar", tag: "section", classes:"warning", components:[
+					{tag: "header", content:"No car selected"},
+					{content: "Go to <a href=\"#manage-cars\">manage cars</a> to add one.", allowHtml: true}
+				]}
 			]},
 			{name: "settingsSlider", kind: "enyo.Slideable", classes:"enyo-fit settings-slider", value: -100, min: -100, max: 0, unit: "%", components:[
 				{kind: "enyo.Scroller", classes: "scroller settings-panel", components:[
 					{tag:"section", components:[
+						{tag: "header", content: "Active Car"},
 						{name: "carRepeater", kind: "nomad.DataSelect", components:[
 							{bindings: [
 								{from: ".model.name", to: ".content"},

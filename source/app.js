@@ -13,7 +13,7 @@ enyo.kind({
 			{path: "dashboard", handler: "showDashboard", context: "owner"},
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
-			{path: "manage-cars", handler: "showManageCars", context: "owner"},
+			{path: "manage-cars", handler: "showManageCars", context: "owner"}
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }}
 	],
 
@@ -29,33 +29,42 @@ enyo.kind({
 	start: function() {
 		this.inherited(arguments);
 
-		var carCollection = new enyo.Collection({
-			model: "mileage.Car"
-		});
+		enyo.store.addSources({local: new mileage.data.LocalStorageSource});
 
-		this.set('cars', carCollection);
-
-		var car = new mileage.Car({
-			name: "Honda S2000"
-		});
-
-		carCollection.add(car);
-
-		this.set('car', car);
-
-		carCollection.add(new mileage.Car({
-			name: "BMW 325i"
-		}));
+		this.loadCars();
 	},
 
 	setActiveCar: function(car) {
 		this.set('car', car);
 	},
 
+	createCar: function() {
+		var newCar = this.get('cars').createRecord();
+		if(!this.get('car'))
+			this.set('car', newCar);
+		return newCar;
+	},
+
 	removeCar: function(car) {
 		this.cars.remove(car);
 		if(this.get('car') == car)
 			this.set('car', this.cars.at(0));
+	},
+
+	saveCars: function() {
+		localStorage.setItem('cars', this.get('cars').toJSON());
+	},
+
+	loadCars: function() {
+		var loaded = localStorage.getItem('cars');
+		if(loaded)
+			this.set('cars', enyo.store.createCollection("mileage.data.CarCollection", JSON.parse(loaded)));
+		else
+			this.set('cars', enyo.store.createCollection("mileage.data.CarCollection"));
+	},
+
+	carsChanged: function(was, cars) {
+		this.set('car', cars.at(0));
 	},
 
 	setView: function(ctor) {

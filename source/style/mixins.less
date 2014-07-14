@@ -7,6 +7,24 @@
 
 	padding: @nice-spacing;
 
+	header {
+		font-size: 1.25rem;
+
+		input {
+			font-size: inherit;
+			&:not(:focus) {
+				background-color: transparent;
+				box-shadow: none;
+			}
+		}
+
+		padding-bottom: @nice-spacing;
+
+		button {
+			font-size: 1rem;
+		}
+	}
+
 	&.animate-showing {
 		.animate(slide-up);
 	}
@@ -34,15 +52,3 @@
 		width: @grabber-width;
 	}
 }
-
-/* Chrome, Safari, Opera */
-	@-webkit-keyframes myfirst {
-		from {background: red;}
-		to {background: yellow;}
-	}
-
-/* Standard syntax */
-@keyframes myfirst {
-    from {background: red;}
-    to {background: yellow;}
- }

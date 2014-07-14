@@ -19,7 +19,7 @@ enyo.kind({
 	],
 
 	addCar: function(inSender, inEvent) {
-		app.cars.add(new mileage.Car());
+		app.createCar();
 		var newCarIndex = app.cars.get('length') - 1;
 		var newCarSection = this.$.carRepeater.getChildForIndex(newCarIndex);
 

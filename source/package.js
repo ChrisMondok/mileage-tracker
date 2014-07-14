@@ -5,9 +5,10 @@ enyo.depends(
 	"style",
 
 	"nomad",
+	"data",
 
-	"data.js",
 	"bindings.js",
+	"mixins.js",
 
 	"Dashboard.js",
 	"AddFillUp.js",

@@ -38,7 +38,7 @@ enyo.kind({
 	create: function() {
 		this.inherited(arguments);
 		if(!this.getFillUp())
-			this.setFillUp(enyo.store.createRecord("mileage.FillUp", {
+			this.setFillUp(enyo.store.createRecord("mileage.data.FillUp", {
 				date: new Date()
 			}));
 	},
