@@ -52,10 +52,6 @@ enyo.kind({
 		enyo.Signals.send("onCarValuesChanged");
 	},
 
-	observers: {
-		valuesChanged: ["initialMileage"]
-	},
-
 	computed: {
 		carId:[],
 		averageMPG:["fillUpsModifiedAt", "initialMileage", {cached: true}]
