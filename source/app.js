@@ -15,7 +15,8 @@ enyo.kind({
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
 			{path: "manage-cars", handler: "showManageCars", context: "owner"},
 			{path: "maintenance-setup", handler: "showMaintenanceSetup", context: "owner"},
-			{path: "maintenance-setup/:carId", handler: "showMaintenanceSetup", context: "owner"}
+			{path: "maintenance-setup/:carId", handler: "showMaintenanceSetup", context: "owner"},
+			{path: "import", handler: "showImport", context: "owner"},
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }},
 		{kind: "enyo.Signals", onCarValuesChanged: "saveEventually"}
 	],
@@ -48,8 +49,8 @@ enyo.kind({
 		this.set('car', car);
 	},
 
-	createCar: function() {
-		var newCar = this.get('cars').createRecord({a:3});
+	createCar: function(data) {
+		var newCar = this.get('cars').createRecord(data);
 		if(!this.get('car'))
 			this.set('car', newCar);
 		return newCar;
@@ -102,6 +103,10 @@ enyo.kind({
 	showMaintenanceSetup: function(carId) {
 		var car = enyo.store.findLocal("mileage.data.Car", {carId: carId});
 		this.setView(this.createComponent({kind: "mileage.MaintenanceSetup", car: car}));
+	},
+
+	showImport: function() {
+		this.setView(this.createComponent({kind: "mileage.Import"}));
 	}
 });
 

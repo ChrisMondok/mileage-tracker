@@ -41,7 +41,8 @@ enyo.kind({
 					{tag: "section", components:[
 						{tag: "header", content:"Settings"},
 						{content: "Maintenance Schedule", kind: "enyo.Button"},
-						{content: "Manage Cars", kind: "enyo.Button", ontap: "manageCars"}
+						{content: "Manage Cars", kind: "enyo.Button", ontap: "manageCars"},
+						{content: "Import Data", kind: "enyo.Button", ontap: "importData"}
 					]}
 				]}
 			]}
@@ -62,6 +63,10 @@ enyo.kind({
 
 	manageCars: function() {
 		window.location.hash = "manage-cars";
+	},
+
+	importData: function() {
+		window.location.hash = "import";
 	}
 });
 

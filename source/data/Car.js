@@ -96,7 +96,7 @@ enyo.kind({
 
 	parse: function(data) {
 		var now = new Date().getTime();
-		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps, {model: mileage.data.Car});
+		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps, {model: mileage.data.FillUp});
 		data.fillUpsModifiedAt = now;
 		
 		data.maintenanceSchedule = this.store.createCollection("enyo.Collection", data.maintenanceSchedule, {model: mileage.data.MaintenanceItem});
