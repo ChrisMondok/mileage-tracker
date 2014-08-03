@@ -59,7 +59,7 @@ enyo.kind({
 		});
 
 		for(var i in cars) {
-			cars[i].fillUps.sort("odometer");
+			cars[i].fillUps = cars[i].fillUps.sortBy("odometer");
 			app.createCar(cars[i]);
 		}
 
