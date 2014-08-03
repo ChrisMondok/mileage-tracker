@@ -38,7 +38,7 @@ enyo.kind({
 	},
 
 	components:[
-		{tag: "header", classes: "flex-columns", components:[
+		{tag: "header", components:[
 			{name: "carName", placeholder: "Unnamed Car", kind: "enyo.Input", classes: "fill"},
 			{name: "deleteCarButton", content: "Delete", kind: "enyo.Button", classes: "danger", ontap: "deleteCar"}
 		]},

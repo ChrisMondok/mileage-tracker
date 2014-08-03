@@ -16,7 +16,11 @@ enyo.kind({
 		onCarChanged:""
 	},
 
-	includeKeys: ["fillUps", "name", "initialMileage"],
+	createMaintenanceItem: function() {
+		return this.get('maintenanceSchedule').createRecord();
+	},
+
+	includeKeys: ["fillUps", "name", "initialMileage", "maintenanceSchedule", "carId"],
 
 	addFillUp: function(f) {
 		this.get("fillUps").add(f);
@@ -53,12 +57,7 @@ enyo.kind({
 	},
 
 	computed: {
-		carId:[],
 		averageMPG:["fillUpsModifiedAt", "initialMileage", {cached: true}]
-	},
-
-	carId: function() {
-		return this.euid;
 	},
 
 	fillUpsChanged: function(old, fillUps, path, options) {
@@ -88,12 +87,20 @@ enyo.kind({
 			arguments[0] = {};
 
 		this.inherited(arguments);
+
+		if(!this.get('carId'))
+			this.set('carId', this.euid);
+
 		this.subscribeToCollection(this.get('fillUps'));
 	},
 
 	parse: function(data) {
-		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps);
-		data.fillUpsModifiedAt = new Date().getTime();
+		var now = new Date().getTime();
+		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps, {model: mileage.data.Car});
+		data.fillUpsModifiedAt = now;
+		
+		data.maintenanceSchedule = this.store.createCollection("enyo.Collection", data.maintenanceSchedule, {model: mileage.data.MaintenanceItem});
+		data.maintenanceModifiedAt = now;
 		return data;
 	}
 });

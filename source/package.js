@@ -1,3 +1,10 @@
+enyo.setPath("mileage.Frequencies", {
+	MONTHS:{name: "months"},
+	DAYS:{name: "days"},
+	WEEKS:{name: "weeks"},
+	YEARS:{name: "years"}
+});
+
 enyo.depends(
 	// Libraries
 	"$lib/layout",
@@ -14,6 +21,7 @@ enyo.depends(
 	"AddFillUp.js",
 	"AddMaintenance.js",
 	"ManageCars.js",
+	"MaintenanceSetup.js",
 
 	"app.js"
 );

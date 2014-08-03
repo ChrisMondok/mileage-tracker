@@ -11,14 +11,22 @@ input {
 
 .input-decorator {
 	color: mix(@app-background-color, contrast(@app-background-color));
+	position: relative;
+	padding: 4px;
 
 	input {
 		box-shadow: none;
 		background: transparent;
-		margin:0;
+		margin: 0;
 		padding-top:0;
 		padding-bottom:0;
 		flex-grow: 1;
+	}
+
+	select {
+		height: 100%;
+		background-color: transparent;
+		border: none;
 	}
 }
 

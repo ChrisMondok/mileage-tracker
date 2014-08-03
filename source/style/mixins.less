@@ -53,3 +53,47 @@
 		width: @grabber-width;
 	}
 }
+
+.list-of-cards {
+	padding: 0 @nice-spacing;
+
+	header {
+		font-size: 2rem;
+		font-family: "lato italic";
+		font-style: italic;
+	}
+
+	section {
+		.card();
+
+		header {
+			.flex-columns;
+		}
+
+		header input:not(:last-child) {
+			margin-right: @nice-spacing;
+		}
+
+		label {
+			.flex-columns;
+
+			input {
+				flex-grow: 1;
+
+				&:invalid {
+					.input(mix(@app-background-color, red));
+				}
+			}
+		}
+
+	}
+
+	> button {
+		.full-width;
+		.button(@app-background-color);
+	}
+
+	button.danger {
+		.button(red);
+	}
+}

@@ -9,11 +9,13 @@ enyo.kind({
 	kind: "enyo.Application",
 
 	components:[
-		{kind: "Router", useHistory: true, triggerOnStart: true, routes:[
+		{kind: "Router", useHistory: true, triggerOnStart: false, routes:[
 			{path: "dashboard", handler: "showDashboard", context: "owner"},
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
-			{path: "manage-cars", handler: "showManageCars", context: "owner"}
+			{path: "manage-cars", handler: "showManageCars", context: "owner"},
+			{path: "maintenance-setup", handler: "showMaintenanceSetup", context: "owner"},
+			{path: "maintenance-setup/:carId", handler: "showMaintenanceSetup", context: "owner"}
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }},
 		{kind: "enyo.Signals", onCarValuesChanged: "saveEventually"}
 	],
@@ -37,6 +39,9 @@ enyo.kind({
 		enyo.store.addSources({local: new mileage.data.LocalStorageSource});
 
 		this.loadCars();
+		console.log("Cars loaded");
+
+		this.$.router.trigger();
 	},
 
 	setActiveCar: function(car) {
@@ -69,6 +74,7 @@ enyo.kind({
 	},
 
 	carsChanged: function(was, cars) {
+		console.log("Setting app car");
 		this.set('car', cars.at(0));
 	},
 
@@ -92,6 +98,11 @@ enyo.kind({
 	showManageCars: function() {
 		this.setView(this.createComponent({kind: "mileage.ManageCars"}));	
 	},
+
+	showMaintenanceSetup: function(carId) {
+		var car = enyo.store.findLocal("mileage.data.Car", {carId: carId});
+		this.setView(this.createComponent({kind: "mileage.MaintenanceSetup", car: car}));
+	}
 });
 
 enyo.ready(function () {

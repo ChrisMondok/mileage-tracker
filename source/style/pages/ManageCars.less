@@ -3,37 +3,10 @@
 		flex-shrink: 0;
 	}
 	.main-scroller {
-		padding: 0 @nice-spacing;
+		.list-of-cards();
 
-		section {
-			.card();
-
-			header input {
-				margin-right: @nice-spacing;
-			}
-
-			label {
-				.flex-columns;
-
-				input {
-					flex-grow: 1;
-					margin-left: @nice-spacing;
-
-					&:invalid {
-						.input(mix(@app-background-color, red));
-					}
-				}
-			}
-
-		}
-
-		> button {
-			.full-width;
-			.button(@app-background-color);
-		}
-
-		button.danger {
-			.button(red);
+		section label input {
+			margin-left: @nice-spacing;
 		}
 	}
 }
