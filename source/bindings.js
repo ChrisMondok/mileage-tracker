@@ -16,6 +16,16 @@ enyo.kind({
 });
 
 enyo.kind({
+	name: "mileage.RelativeDateBinding",
+	kind: "enyo.Binding",
+	transform: function(value, direction, binding) {
+		if(direction != "source")
+			throw new Error("Relative date two-way-binding is not implemented.");
+		return value && value.relative();
+	}
+});
+
+enyo.kind({
 	name: "mileage.NumberBinding",
 	kind: "enyo.Binding",
 	transform: function(value, direction, binding) {

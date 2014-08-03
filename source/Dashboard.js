@@ -4,20 +4,26 @@ enyo.kind({
 
 	bindings:[
 		{from: "^app.car", to: ".$.mpgSummary.car"},
+		{from: "^app.car", to: ".$.lastFillUp.car"},
 		{from: "^app.car", to: ".$.hasACar.showing", kind: "enyo.BooleanBinding"},
 		{from: "^app.car", to: ".$.doesNotHaveACar.showing", kind: "enyo.InvertBooleanBinding"},
-		{from: "^app.cars", to: ".$.carRepeater.collection"}
+		{from: "^app.car.name", to: ".$.carName.content"},
+		{from: "^app.cars", to: ".$.carRepeater.collection"},
+		{from: "^app.car.fillUps", to: ".$.lastFillUp.showing", transform: function(fillUps) {
+			return fillUps.length > 1;
+		}}
 	],
 
 	components:[
 		{kind: "nomad.Toolbar", classes:"flex-columns", components:[
 			{content: "☰", ontap: "toggleMenu"},
-			{content:"App Name"}
+			{name: "carName", content:"Car Name"}
 		]},
 		{classes:"fill", components:[
 			{kind: "enyo.Scroller", classes:"main-scroller enyo-fit", components:[
 				{name: "hasACar", components:[
-					{name: "mpgSummary", tag: "section", kind: "mileage.MPGSummary"},
+					{name: "mpgSummary", kind: "mileage.MPGSummary", tag: "section"},
+					{name: "lastFillUp", kind: "mileage.LastFillUpDisplay", tag: "section"},
 					{kind: "mileage.MaintenanceSummary"},
 					{name: "addFillUpButton", content: "Add Fill-Up", kind: "enyo.Button", ontap:"addFillUp"},
 					{name: "addMaintenanceButton", content: "Perform Maintenance", kind: "enyo.Button"}
@@ -27,7 +33,7 @@ enyo.kind({
 					{content: "Go to <a href=\"#manage-cars\">manage cars</a> to add one.", allowHtml: true}
 				]}
 			]},
-			{name: "settingsSlider", kind: "enyo.Slideable", classes:"enyo-fit settings-slider", value: -100, min: -100, max: 0, unit: "%", components:[
+			{name: "settingsSlider", kind: "enyo.Slideable", overMoving: false, classes:"enyo-fit settings-slider", value: -100, min: -100, max: 0, unit: "%", components:[
 				{kind: "enyo.Scroller", classes: "scroller settings-panel", components:[
 					{tag:"section", components:[
 						{tag: "header", content: "Active Car"},
@@ -71,9 +77,51 @@ enyo.kind({
 });
 
 enyo.kind({
+	name: "mileage.LastFillUpDisplay",
+	classes: "last-fill-up",
+
+	bindings:[
+		{from: ".car.fillUpsModifiedAt", to: ".fillUpsLastModified"},
+		{from: ".enoughData", to: ".$.notEnoughData.showing", kind: "enyo.InvertBooleanBinding"},
+		{from: ".enoughData", to: ".$.mpg.showing", kind: "enyo.BooleanBinding"},
+		{from: ".mpg", to: ".$.mpg.content", transform: function(mpg) {
+			return Math.round(mpg * 100)/100 + " MPG";
+		}},
+		{from: ".date", to: ".$.date.content", kind: "mileage.RelativeDateBinding"}
+	],
+
+	components:[
+		{classes: "flex-columns", components:[
+			{content: "Last fill-up", classes: "fill"},
+			{name: "date"}
+		]},
+		{name: "notEnoughData", content: "Not enough data!"},
+		{name: "mpg"}
+	],
+
+	fillUpsLastModifiedChanged: function() {
+		var fillUps = this.get('car').get('fillUps');
+
+		if(fillUps.length < 2) {
+			this.set('enoughData', false);
+			return;
+		}
+
+		this.set('enoughData', true);
+
+		var ultimate = fillUps.at(fillUps.length - 1),
+			penultimate = fillUps.at(fillUps.length - 2);
+
+		this.set('mpg', (ultimate.get('odometer') - penultimate.get('odometer')) / ultimate.get('gallons'));
+
+		this.set('date', ultimate.get('date'));
+	}
+});
+
+
+enyo.kind({
 	name: "mileage.MPGSummary",
 	classes: "mpg-summary",
-	content:"MPG Summary",
 
 	bindings:[
 		{from: ".car.averageMPG", to: ".$.wholeNumberPart.content", transform: function(value) {

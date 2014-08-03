@@ -12,10 +12,6 @@ enyo.kind({
 	url: "cars",
 	primaryKey: "carId",
 
-	events:{
-		onCarChanged:""
-	},
-
 	createMaintenanceItem: function() {
 		return this.get('maintenanceSchedule').createRecord();
 	},
@@ -52,7 +48,7 @@ enyo.kind({
 	},
 
 	valuesChanged: function() {
-		this.set("fillUpsModifiedAt", new Date().getTime());
+		this.set("fillUpsModifiedAt", new Date());
 		enyo.Signals.send("onCarValuesChanged");
 	},
 
@@ -95,7 +91,7 @@ enyo.kind({
 	},
 
 	parse: function(data) {
-		var now = new Date().getTime();
+		var now = new Date();
 		data.fillUps = this.store.createCollection("enyo.Collection", data.fillUps, {model: mileage.data.FillUp});
 		data.fillUpsModifiedAt = now;
 		
