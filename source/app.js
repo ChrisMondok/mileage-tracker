@@ -22,7 +22,7 @@ enyo.kind({
 	],
 
 	saveEventually: function() {
-		this.startJob("saveCarsEventually", "saveCars", 1000);
+		this.startJob("saveCarsEventually", "saveCars", 2500);
 	},
 
 	observers: {
