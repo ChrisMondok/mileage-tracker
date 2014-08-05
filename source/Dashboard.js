@@ -124,6 +124,7 @@ enyo.kind({
 	classes: "mpg-summary",
 
 	bindings:[
+		{from: ".car", to: ".$.mileageGraph.car"},
 		{from: ".car.averageMPG", to: ".$.wholeNumberPart.content", transform: function(value) {
 			var n = Number(value);
 			if(isNaN(n))
@@ -149,7 +150,7 @@ enyo.kind({
 			{content:"MPG"}
 		]},
 		{classes: "graph", components:[
-			{content:"A nice graph goes here"}
+			{kind: "mileage.MileageGraph"}
 		]}
 	]
 });

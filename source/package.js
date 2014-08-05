@@ -16,6 +16,7 @@ enyo.depends(
 	"ManageCars.js",
 	"MaintenanceSetup.js",
 	"Import.js",
+	"MileageGraph.js",
 
 	"app.js"
 );

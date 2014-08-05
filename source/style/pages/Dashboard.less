@@ -19,6 +19,8 @@
 	.settings-slider {
 		.grabbable-left-panel();
 	}
+
+	
 }
 
 .mpg-summary {
@@ -46,7 +48,14 @@
 		flex: 1 1;
 		.column(@card-background-color);
 		.right;
+		position: relative;
 
-		padding-left: @nice-spacing;
+		.mileage-graph {
+			position: absolute;
+			left: @nice-spacing;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
 	}
 }
