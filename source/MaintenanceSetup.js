@@ -45,10 +45,31 @@ enyo.kind({
 		maintenanceItem: null
 	},
 
+	bindings: [
+		{from: ".maintenanceItem.name", to: ".$.name.value", oneWay: false},
+		{from: ".maintenanceItem.mileInterval", to: ".$.milesInput.value", oneWay: false},
+		{from: ".maintenanceItem.timeInterval", to: ".$.timeInput.value", oneWay: false},
+
+		//can't bind to selects? what is this‽
+		{from: ".maintenanceItem.timeUnit", to: ".frequency", oneWay: false},
+		{from: ".$.frequencySelect.value", to: ".frequency"}
+	],
+
+	frequencyChanged: function(old, frequency) {
+		if(frequency) {
+			var cmps = this.$.frequencySelect.getComponents();
+			var values = cmps.map('value');
+			if(this.$.frequencySelect.hasNode())
+				this.$.frequencySelect.setSelected(values.indexOf(frequency));
+			else
+				cmps[values.indexOf(frequency)].setSelected(true);
+		}
+	},
+
 	components:[
 		{tag: "header", components:[
 			{name: "name", kind: "enyo.Input", classes: "fill"},
-			{kind: "enyo.Button", classes:"danger", content: "Delete"}
+			{kind: "enyo.Button", classes:"danger", content: "Delete", ontap: "deleteItem", attributes:{tabIndex:-1}}
 		]},
 		{content: "Due every"},
 		{tag:"label", classes:"input-decorator flex-columns", components:[
@@ -70,5 +91,9 @@ enyo.kind({
 				value: k
 			});
 		});
+	},
+
+	deleteItem: function() {
+		this.get("maintenanceItem").destroy();
 	}
 });

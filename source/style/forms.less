@@ -59,6 +59,10 @@ label {
 		outline: none;
 	}
 
+	&::selection {
+		color: contrast(@selection-bg);
+		background-color: @selection-bg;
+	}
 }
 
 .button(@background-color: @app-background-color) {

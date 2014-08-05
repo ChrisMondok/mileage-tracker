@@ -46,7 +46,7 @@ enyo.kind({
 					]},
 					{tag: "section", components:[
 						{tag: "header", content:"Settings"},
-						{content: "Maintenance Schedule", kind: "enyo.Button"},
+						{content: "Maintenance Schedule", kind: "enyo.Button", ontap: "setUpMaintenance"},
 						{content: "Manage Cars", kind: "enyo.Button", ontap: "manageCars"},
 						{content: "Import Data", kind: "enyo.Button", ontap: "importData"}
 					]}
@@ -73,6 +73,10 @@ enyo.kind({
 
 	importData: function() {
 		window.location.hash = "import";
+	},
+
+	setUpMaintenance: function() {
+		window.location.hash = "maintenance-setup/"+app.car.get("carId");
 	}
 });
 

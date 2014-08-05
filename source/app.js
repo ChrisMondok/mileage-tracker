@@ -14,9 +14,8 @@ enyo.kind({
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
 			{path: "manage-cars", handler: "showManageCars", context: "owner"},
-			{path: "maintenance-setup", handler: "showMaintenanceSetup", context: "owner"},
 			{path: "maintenance-setup/:carId", handler: "showMaintenanceSetup", context: "owner"},
-			{path: "import", handler: "showImport", context: "owner"},
+			{path: "import", handler: "showImport", context: "owner"}
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }},
 		{kind: "enyo.Signals", onCarValuesChanged: "saveEventually"}
 	],
