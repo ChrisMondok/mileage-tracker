@@ -16,6 +16,23 @@ enyo.kind({
 });
 
 enyo.kind({
+	name: "mileage.DateToLocaleDateStringBinding",
+	kind: "enyo.Binding",
+	transform: function(value, direction, binding) {
+		if(direction == "target") {
+			var date = Date.create(value);
+			if(!isNaN(date))
+				return date;
+		}
+		else
+		{
+			if(value && value instanceof Date)
+				return value.toLocaleDateString();
+		}
+	}
+});
+
+enyo.kind({
 	name: "mileage.RelativeDateBinding",
 	kind: "enyo.Binding",
 	transform: function(value, direction, binding) {

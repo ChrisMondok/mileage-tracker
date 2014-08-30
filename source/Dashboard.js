@@ -22,7 +22,7 @@ enyo.kind({
 		{classes:"fill", components:[
 			{kind: "enyo.Scroller", classes:"main-scroller enyo-fit", components:[
 				{name: "hasACar", components:[
-					{name: "mpgSummary", kind: "mileage.MPGSummary", tag: "section"},
+					{name: "mpgSummary", kind: "mileage.MPGSummary", tag: "section", ontap: "showFillUpLog"},
 					{name: "lastFillUp", kind: "mileage.LastFillUpDisplay", tag: "section"},
 					{kind: "mileage.MaintenanceSummary"},
 					{name: "addFillUpButton", content: "Add Fill-Up", kind: "enyo.Button", ontap:"addFillUp"},
@@ -58,6 +58,11 @@ enyo.kind({
 	addFillUp: function(inSender, inEvent) {
 		window.location.hash = "add-fill-up";
 		inEvent.preventDefault();
+	},
+
+	showFillUpLog: function(inSender, inEvent) {
+		window.location.hash = "fill-up-log";
+		return true;
 	},
 
 	toggleMenu: function() {

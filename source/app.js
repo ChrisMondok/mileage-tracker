@@ -14,6 +14,7 @@ enyo.kind({
 			{path: "add-fill-up", handler: "showAddFillUp", context: "owner"},
 			{path: "add-maintenance", handler: "showAddFillUp", context: "owner"},
 			{path: "manage-cars", handler: "showManageCars", context: "owner"},
+			{path: "fill-up-log", handler: "showFillUpLog", context: "owner"},
 			{path: "maintenance-setup/:carId", handler: "showMaintenanceSetup", context: "owner"},
 			{path: "import", handler: "showImport", context: "owner"}
 		], defaultRoute: {path: "dashboard", handler: "showDashboard", context: "owner" }},
@@ -97,6 +98,10 @@ enyo.kind({
 
 	showManageCars: function() {
 		this.setView(this.createComponent({kind: "mileage.ManageCars"}));	
+	},
+
+	showFillUpLog: function() {
+		this.setView(this.createComponent({kind: "mileage.FillUpLog"}));	
 	},
 
 	showMaintenanceSetup: function(carId) {
